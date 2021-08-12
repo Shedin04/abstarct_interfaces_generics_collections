@@ -9,8 +9,10 @@ public class Main {
         teams.add(new Basketball_team("Miami Heat", 69));
 
 
-        teams.get(0).getInfo();
-        teams.get(0).addPlayers(new Player[]{new Player("Tom", 11,BigDecimal.valueOf(40000)), new Player("Bob",12,BigDecimal.valueOf(25000))});
+        teams.get(1).getInfo();
+        teams.get(1).addPlayers(new Player[]{new Player("Tom", 11,BigDecimal.valueOf(40000)), new Player("Bob",12,BigDecimal.valueOf(25000))});
+        teams.get(1).getInfo();
+        teams.get(1).addSallary("Gagasg",BigDecimal.valueOf(4000));
         teams.get(1).getInfo();
     }
 }

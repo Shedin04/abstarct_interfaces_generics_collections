@@ -20,6 +20,6 @@ public class Football_team extends Team{
     }
 
     public String getType() {
-       return "[This is football team]: ";
+       return "[Football team]";
     }
 }

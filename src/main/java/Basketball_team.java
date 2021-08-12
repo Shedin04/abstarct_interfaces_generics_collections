@@ -22,6 +22,6 @@ public class Basketball_team extends Team{
     }
 
     public String getType() {
-        return "[This is basket team]: ";
+        return "[Basketball team]";
     }
 }

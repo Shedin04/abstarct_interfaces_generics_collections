@@ -61,19 +61,19 @@ public abstract class Team {
         }
     }
 
-    protected String getName() {
+    private String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
 
-    protected int getRate() {
+    private int getRate() {
         return rate;
     }
 
-    protected void setRate(int rate) {
+    private void setRate(int rate) {
         this.rate = rate;
     }
 
@@ -91,12 +91,10 @@ public abstract class Team {
     }
 
     public void getInfo(){
-        index = 0;
-        System.out.println(getName() + " | Rate:" + getRate() + " | Squad: ");
-        while (index<players.size())
-        System.out.println(players.get(index++));
-        while (index<staff.size())
-            System.out.println(staff.get(index++));
+        if (players.size() == 0 && staff.size() == 0 ) System.out.println ("[ERROR]: " + getName() + " don't have a squad\n");
+        System.out.println(getType() + " - " + getName() + ": ");
+        for (int i = 0; i < players.size(); i++) System.out.println(players.get(i));
+        for (int i = 0; i < staff.size(); i++) System.out.println(staff.get(i));
         System.out.println();
     }
 
@@ -106,13 +104,22 @@ public abstract class Team {
     }
 
     public void addSallary(Object data, BigDecimal add){
+        int notfound = 0;
         if (add.compareTo(BigDecimal.ZERO)<0 || add == null) throw new IllegalArgumentException();
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getNumber().equals(data) || players.get(i).getName().equals(data)){
             players.get(i).setSalary(players.get(i).getSalary().add(add));
             break;
             }
-            else if ((i+1) == players.size()) System.out.println("[ERROR]: \"" + data + "\" player - not found");
+            else notfound++;
         }
+        for (int i = 0; i < staff.size(); i++) {
+            if (staff.get(i).getName().equals(data) || staff.get(i).getPosition().equals(data)){
+                staff.get(i).setSalary(staff.get(i).getSalary().add(add));
+                break;
+            }
+            else notfound++;
+        }
+        if (notfound == players.size()+staff.size()) System.out.println("ERROR: Person - not found");
     }
 }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Team implements Update<Integer> {
+public abstract class Team {
     private static int id;
     private final int curId;
     private String name;
@@ -39,7 +39,12 @@ public abstract class Team implements Update<Integer> {
         index = 0;
         Arrays.asList(newplayers).toArray(new Player[newplayers.length]);
         while (index<newplayers.length){
-            this.players.add(newplayers[index++]);
+            for (int i = 0; i < players.size(); i++) {
+                if (newplayers[index].getNumber() == players.get(i).getNumber()) {
+                    throw new IllegalArgumentException("Номер занят");
+                }
+            }
+                this.players.add(newplayers[index++]);
         }
     }
 
@@ -80,7 +85,6 @@ public abstract class Team implements Update<Integer> {
         System.out.println();
     }
 
-    @Override
     public void addRate(Integer add) {
         if (add+getRate() > 100 || add < 0) throw new IllegalArgumentException("Рейтинг должен быть <=100");
         setRate(getRate()+add);

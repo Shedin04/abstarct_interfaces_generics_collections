@@ -13,6 +13,10 @@ public class Basketball_team extends Team{
         super(name, rate, newplayer);
     }
 
+    public Basketball_team(String name, int rate, Staff... newstaff) {
+        super(name, rate, newstaff);
+    }
+
     public Basketball_team(String name, int rate) {
         super(name, rate);
     }

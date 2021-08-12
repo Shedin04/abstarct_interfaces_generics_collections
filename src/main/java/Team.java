@@ -10,21 +10,11 @@ public abstract class Team {
     private int rate;
     private static int index;
     private List<Player> players = new ArrayList<Player>();
+    private List<Staff> staff = new ArrayList<Staff>();
 
     static {
         id = 00;
         index=0;
-    }
-
-    public Team(String name, int rate, Player...newplayer) {
-        Arrays.asList(newplayer).toArray(new Player[newplayer.length]);
-        while (index<newplayer.length){
-            this.players.add(newplayer[index++]);
-        }
-        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
-        this.rate = rate;
-        curId=++id;
-        this.name = name;
     }
 
     public Team(String name, int rate) {
@@ -34,6 +24,29 @@ public abstract class Team {
         this.name = name;
     }
 
+    public Team(String name, int rate, Staff...newstaff) {
+        index = 0;
+        Arrays.asList(newstaff).toArray(new Staff[newstaff.length]);
+        while (index<newstaff.length){
+            this.staff.add(newstaff[index++]);
+        }
+        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
+        this.rate = rate;
+        curId=++id;
+        this.name = name;
+    }
+
+    public Team(String name, int rate, Player...newplayer) {
+        index = 0;
+        Arrays.asList(newplayer).toArray(new Player[newplayer.length]);
+        while (index<newplayer.length){
+            this.players.add(newplayer[index++]);
+        }
+        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
+        this.rate = rate;
+        curId=++id;
+        this.name = name;
+    }
 
     public void addPlayers(Player...newplayers) {
         index = 0;
@@ -79,9 +92,11 @@ public abstract class Team {
 
     public void getInfo(){
         index = 0;
-        System.out.println(getName() + " | Rate:" + getRate() + " | Players: ");
+        System.out.println(getName() + " | Rate:" + getRate() + " | Squad: ");
         while (index<players.size())
         System.out.println(players.get(index++));
+        while (index<staff.size())
+            System.out.println(staff.get(index++));
         System.out.println();
     }
 

@@ -1,7 +1,5 @@
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public abstract class Team {
     private static int id;
@@ -126,4 +124,37 @@ public abstract class Team {
         }
         if (notfound == players.size()+staff.size()) System.out.println("ERROR: Person - not found");
     }
+
+    public static Comparator<Team> byRate = new Comparator<Team>() {
+
+        @Override
+        public int compare(Team o1, Team o2) {
+            return o2.getRate() - o1.getRate();
+        }
+    };
+
+    protected List sortTeambyName(List<Team> teams){
+        Collections.sort(teams, Team.sortteamsbyname);
+        return teams;
+    }
+
+    protected List sortTeambyRate(List<Team> teams){
+        Collections.sort(teams, Team.sortteamsbyrate);
+        return teams;
+    }
+
+
+    private static Comparator<Team> sortteamsbyname = new Comparator<Team>() {
+        @Override
+        public int compare(Team o1, Team o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
+    };
+
+    private static Comparator<Team> sortteamsbyrate = new Comparator<Team>() {
+        @Override
+        public int compare(Team o1, Team o2) {
+            return o2.getRate() - o1.getRate();
+        }
+    };
 }

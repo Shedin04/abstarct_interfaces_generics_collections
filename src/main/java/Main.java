@@ -14,5 +14,7 @@ public class Main {
         teams.get(1).getInfo();
         teams.get(1).addSallary("Gagasg",BigDecimal.valueOf(4000));
         teams.get(1).getInfo();
+        System.out.println(teams);
+        System.out.println(teams.get(1).sortTeambyRate(teams));
     }
 }

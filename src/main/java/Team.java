@@ -18,10 +18,14 @@ public abstract class Team {
     }
 
     public Team(String name, int rate) {
-        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
+        checkRate(rate);
         this.rate = rate;
         curId=++id;
         this.name = name;
+    }
+
+    private void checkRate(int rate) {
+        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
     }
 
     public Team(String name, int rate, Staff...newstaff) {
@@ -30,7 +34,7 @@ public abstract class Team {
         while (index<newstaff.length){
             this.staff.add(newstaff[index++]);
         }
-        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
+        checkRate(rate);
         this.rate = rate;
         curId=++id;
         this.name = name;
@@ -42,7 +46,7 @@ public abstract class Team {
         while (index<newplayer.length){
             this.players.add(newplayer[index++]);
         }
-        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
+        checkRate(rate);
         this.rate = rate;
         curId=++id;
         this.name = name;

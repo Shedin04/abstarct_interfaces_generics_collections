@@ -133,25 +133,36 @@ public abstract class Team {
         }
     };
 
-    protected List sortTeambyName(List<Team> teams){
+    protected List<Team> sortTeambyName(List<Team> teams){
         Collections.sort(teams, Team.sortteamsbyname);
         return teams;
     }
 
-    protected List sortTeambyRate(List<Team> teams){
+    protected List<Team> sortTeambyRate(List<Team> teams){
         Collections.sort(teams, Team.sortteamsbyrate);
         return teams;
     }
 
+    public <T> List<Team> sortPersonsbyName(List<Team> teams, int whichteam){
+        Collections.sort(teams.get(whichteam).players, Person.sortpersonbyname);
+        Collections.sort(teams.get(whichteam).staff, Person.sortpersonbyname);
+        return teams;
+    }
 
-    private static Comparator<Team> sortteamsbyname = new Comparator<Team>() {
+    public <T> List<Team> sortPersonsbySalary(List<Team> teams, int whichteam){
+        Collections.sort(teams.get(whichteam).players, Person.sortpersonbysalary);
+        Collections.sort(teams.get(whichteam).staff, Person.sortpersonbysalary);
+        return teams;
+    }
+    
+    private static final Comparator<Team> sortteamsbyname = new Comparator<Team>() {
         @Override
         public int compare(Team o1, Team o2) {
             return o1.getName().compareTo(o2.getName());
         }
     };
 
-    private static Comparator<Team> sortteamsbyrate = new Comparator<Team>() {
+    private static final Comparator<Team> sortteamsbyrate = new Comparator<Team>() {
         @Override
         public int compare(Team o1, Team o2) {
             return o2.getRate() - o1.getRate();

@@ -1,19 +1,21 @@
 import java.math.BigDecimal;
 import java.util.*;
 
-abstract public class Person<T>{
+abstract public class Person<T> implements Iterable<Items>{
     private static int id;
     private final int curId;
     private String name;
     private BigDecimal salary;
+    private static int index;
     private List<Items> items = new ArrayList<Items>();
 
     static {
         id = 00;
+        index = 0;
     }
 
     protected Person(String name, BigDecimal salary) {
-        curId=++id;
+        curId = ++id;
         this.name = name;
         this.salary = salary;
     }
@@ -38,12 +40,8 @@ abstract public class Person<T>{
         return curId;
     }
 
-    public void addItem(List<Items> newitems){
+    public void addItem(List<Items> newitems) {
         this.items = newitems;
-    }
-
-    public void showItems(){
-        System.out.println(getName()+ " items: " + items);
     }
 
     protected static final Comparator<Person> sortpersonbyname = new Comparator<Person>() {
@@ -59,4 +57,27 @@ abstract public class Person<T>{
             return (o2.getSalary().subtract(o1.getSalary())).intValue();
         }
     };
+
+    public void showItems(){
+        index = 0;
+        System.out.println(getName() + " items: ");
+        while (iterator().hasNext()) System.out.println(iterator().next());
+    }
+
+    @Override
+    public Iterator<Items> iterator() {
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return index < items.size() && items.get(index) != null;
+            }
+
+            @Override
+            public Items next() {
+                System.out.print("* ");
+                if (index >= items.size()) throw new NoSuchElementException();
+                else return items.get(index++);
+            }
+        };
+    }
 }

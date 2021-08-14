@@ -87,7 +87,7 @@ public abstract class Team {
         checkPerson(error);
     }
 
-     public void showItems(String personname){
+    /* public void showItems(String personname){
          error = 0;
          for (int i = 0; i < players.size(); i++) {
              if (personname == players.get(i).getName()) {
@@ -102,7 +102,7 @@ public abstract class Team {
              else error++;
          }
          checkPerson(error);
-     }
+     }*/
 
     private void checkPerson(int error) {
         if (error == (players.size() + staff.size())) System.out.println("[ERROR]: Person not found");
@@ -170,13 +170,22 @@ public abstract class Team {
         if (notfound == players.size()+staff.size()) System.out.println("ERROR: Person - not found\n");
     }
 
-    public static Comparator<Team> byRate = new Comparator<Team>() {
-
-        @Override
-        public int compare(Team o1, Team o2) {
-            return o2.getRate() - o1.getRate();
+    public void showItems(String personname){
+        error = 0;
+        for (int i = 0; i < players.size(); i++) {
+            if (personname == players.get(i).getName()) {
+                players.get(i).showItems();
+            }
+            else error++;
         }
-    };
+        for (int i = 0; i < staff.size(); i++) {
+            if (personname == staff.get(i).getName()) {
+                staff.get(i).showItems();
+            }
+            else error++;
+        }
+        checkPerson(error);
+    }
 
     protected List<Team> sortTeambyName(List<Team> teams){
         Collections.sort(teams, Team.sortteamsbyname);

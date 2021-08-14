@@ -7,12 +7,16 @@ public abstract class Team {
     private String name;
     private int rate;
     private static int index;
+    private static int error;
     private List<Player> players = new ArrayList<Player>();
     private List<Staff> staff = new ArrayList<Staff>();
+    private List<Items> items = new ArrayList<Items>();
+    private List <Items> itemsList = new ArrayList<Items>();
 
     static {
-        id = 00;
+        id = -1;
         index=0;
+        error=0;
     }
 
     public Team(String name, int rate) {
@@ -20,10 +24,6 @@ public abstract class Team {
         this.rate = rate;
         curId=++id;
         this.name = name;
-    }
-
-    private void checkRate(int rate) {
-        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
     }
 
     public Team(String name, int rate, Staff...newstaff) {
@@ -37,6 +37,11 @@ public abstract class Team {
         curId=++id;
         this.name = name;
     }
+
+    private void checkRate(int rate) {
+        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
+    }
+
 
     public Team(String name, int rate, Player...newplayer) {
         index = 0;
@@ -63,6 +68,47 @@ public abstract class Team {
         }
     }
 
+    public void addItems(String personname, Items...newitems) {
+        error = 0;
+        itemsList = Arrays.asList(newitems);
+        for (int i = 0; i < players.size(); i++) {
+            if (personname == players.get(i).getName()) {
+                this.players.get(i).addItem(itemsList);
+                break;
+            }
+            else error++;
+        }
+        for (int i = 0; i < staff.size(); i++) {
+            if (personname == staff.get(i).getName()) {
+                this.staff.get(i).addItem(itemsList);
+                break;
+            }
+            else error++;
+        }
+        checkPerson(error);
+    }
+
+     public void showItems(String personname){
+         error = 0;
+         for (int i = 0; i < players.size(); i++) {
+             if (personname == players.get(i).getName()) {
+                 players.get(i).showItems();
+             }
+             else error++;
+         }
+         for (int i = 0; i < staff.size(); i++) {
+             if (personname == staff.get(i).getName()) {
+                 staff.get(i).showItems();
+             }
+             else error++;
+         }
+         checkPerson(error);
+     }
+
+    private void checkPerson(int error) {
+        if (error == (players.size() + staff.size())) System.out.println("[ERROR]: Person not found");
+    }
+
     private String getName() {
         return name;
     }
@@ -79,7 +125,7 @@ public abstract class Team {
         this.rate = rate;
     }
 
-    public int getCurId() {
+    private int getCurId() {
         return curId;
     }
 
@@ -87,14 +133,14 @@ public abstract class Team {
 
     @Override
     public String toString() {
-        return getType() + "{" +
+        return  "[id:" + curId + "]" + getType() + "{" +
                 "name='" + name + '\'' +
                 ", rate=" + rate +'}';
     }
 
     public void getInfo(){
         if (players.size() == 0 && staff.size() == 0 ) System.out.println ("[ERROR]: " + getName() + " don't have a squad\n");
-        System.out.println(getType() + " - " + getName() + ": ");
+        System.out.println(getType() + "[" + curId + "] - " + getName() + ": ");
         for (int i = 0; i < players.size(); i++) System.out.println(players.get(i));
         for (int i = 0; i < staff.size(); i++) System.out.println(staff.get(i));
         System.out.println();
@@ -122,7 +168,7 @@ public abstract class Team {
             }
             else notfound++;
         }
-        if (notfound == players.size()+staff.size()) System.out.println("ERROR: Person - not found");
+        if (notfound == players.size()+staff.size()) System.out.println("ERROR: Person - not found\n");
     }
 
     public static Comparator<Team> byRate = new Comparator<Team>() {

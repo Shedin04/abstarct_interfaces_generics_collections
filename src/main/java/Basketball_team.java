@@ -21,7 +21,7 @@ public class Basketball_team extends Team{
         super(name, rate);
     }
 
-    public String getType() {
-        return "[Basketball team]";
+    protected String getType() {
+        return "Basketball team";
     }
 }

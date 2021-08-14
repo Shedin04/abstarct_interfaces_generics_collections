@@ -1,18 +1,15 @@
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-abstract public class Person<T> {
+abstract public class Person<T>{
     private static int id;
     private final int curId;
     private String name;
     private BigDecimal salary;
-    private static int index;
+    private List<Items> items = new ArrayList<Items>();
 
     static {
         id = 00;
-        index=0;
     }
 
     protected Person(String name, BigDecimal salary) {
@@ -39,6 +36,14 @@ abstract public class Person<T> {
 
     protected int getCurId() {
         return curId;
+    }
+
+    public void addItem(List<Items> newitems){
+        this.items = newitems;
+    }
+
+    public void showItems(){
+        System.out.println(getName()+ " items: " + items);
     }
 
     protected static final Comparator<Person> sortpersonbyname = new Comparator<Person>() {

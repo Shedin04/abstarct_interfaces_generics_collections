@@ -19,7 +19,7 @@ public class Staff extends Person{
     @Override
     public String toString() {
         return "Employee: {" +
-                "curId=" + getCurId() +
+                "Id=" + getCurId() +
                 ", name='" + getName() + '\'' +
                 ", position=" + getPosition() +
                 ", salary=" + getSalary() +

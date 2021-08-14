@@ -19,7 +19,7 @@ public class Player<T> extends Person<T>{ //T чтобы number был любо�
     @Override
     public String toString() {
         return "Player: {" +
-                "curId=" + getCurId() +
+                "Id=" + getCurId() +
                 ", name='" + getName() + '\'' +
                 ", number=" + getNumber() +
                 ", salary=" + getSalary() +

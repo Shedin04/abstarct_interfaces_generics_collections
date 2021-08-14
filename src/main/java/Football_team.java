@@ -19,7 +19,7 @@ public class Football_team extends Team{
         super(name, rate);
     }
 
-    public String getType() {
-       return "[Football team]";
+    protected String getType() {
+       return "Football team";
     }
 }

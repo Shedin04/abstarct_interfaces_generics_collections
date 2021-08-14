@@ -170,7 +170,7 @@ public abstract class Team {
         if (notfound == players.size()+staff.size()) System.out.println("ERROR: Person - not found\n");
     }
 
-    public void showItems(String personname){
+    public void showPersonItems(String personname){
         error = 0;
         for (int i = 0; i < players.size(); i++) {
             if (personname == players.get(i).getName()) {
@@ -185,6 +185,11 @@ public abstract class Team {
             else error++;
         }
         checkPerson(error);
+    }
+
+    public void showAllItems(){
+        for (int i = 0; i < players.size(); i++) players.get(i).showItems();
+        for (int i = 0; i < staff.size(); i++) staff.get(i).showItems();
     }
 
     protected List<Team> sortTeambyName(List<Team> teams){

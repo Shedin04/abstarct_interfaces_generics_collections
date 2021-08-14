@@ -8,9 +8,8 @@ public abstract class Team {
     private int rate;
     private static int index;
     private static int error;
-    private List<Player> players = new ArrayList<Player>();
-    private List<Staff> staff = new ArrayList<Staff>();
-    private List<Items> items = new ArrayList<Items>();
+    private final List<Player> players = new ArrayList<>();
+    private final List<Staff> staff = new ArrayList<Staff>();
     private List <Items> itemsList = new ArrayList<Items>();
 
     static {
@@ -201,14 +200,14 @@ public abstract class Team {
         return teams;
     }
     
-    private static final Comparator<Team> sortteamsbyname = new Comparator<Team>() {
+    private static final Comparator<Team> sortteamsbyname = new Comparator<>() {
         @Override
         public int compare(Team o1, Team o2) {
             return o1.getName().compareTo(o2.getName());
         }
     };
 
-    private static final Comparator<Team> sortteamsbyrate = new Comparator<Team>() {
+    private static final Comparator<Team> sortteamsbyrate = new Comparator<>() {
         @Override
         public int compare(Team o1, Team o2) {
             return o2.getRate() - o1.getRate();

@@ -1,13 +1,14 @@
 import java.math.BigDecimal;
 import java.util.*;
 
-public abstract class Team {
+public abstract class Team <T>{
     private static int id;
     private final int curId;
     private String name;
     private int rate;
     private static int index;
     private static int error;
+    private static BigDecimal totalsalary;
     private final List<Player> players = new ArrayList<>();
     private final List<Staff> staff = new ArrayList<Staff>();
     private List <Items> itemsList = new ArrayList<Items>();
@@ -87,22 +88,34 @@ public abstract class Team {
         checkPerson(error);
     }
 
-    /* public void showItems(String personname){
-         error = 0;
-         for (int i = 0; i < players.size(); i++) {
-             if (personname == players.get(i).getName()) {
-                 players.get(i).showItems();
-             }
-             else error++;
-         }
-         for (int i = 0; i < staff.size(); i++) {
-             if (personname == staff.get(i).getName()) {
-                 staff.get(i).showItems();
-             }
-             else error++;
-         }
-         checkPerson(error);
-     }*/
+    public BigDecimal totalToPay(Type type){
+        totalsalary = BigDecimal.ZERO;
+        switch (type) {
+            case Player:
+            for (Player pl :
+                    players) {
+                totalsalary = totalsalary.add(pl.getSalary());
+            }
+            break;
+            case Staff:
+            for (Staff st :
+                    staff) {
+                totalsalary = totalsalary.add(st.getSalary());
+            }
+            break;
+            case All:
+                for (Player pl :
+                        players) {
+                    totalsalary = totalsalary.add(pl.getSalary());
+                }
+                for (Staff st :
+                        staff) {
+                    totalsalary = totalsalary.add(st.getSalary());
+                }
+                break;
+        }
+        return totalsalary;
+    }
 
     private void checkPerson(int error) {
         if (error == (players.size() + staff.size())) System.out.println("[ERROR]: Person not found");

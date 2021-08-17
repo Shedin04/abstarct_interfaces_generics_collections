@@ -1,12 +1,23 @@
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 public class Main {
     private static Logger logger;
 
-    public static void main(String[] args) {
+    static {
         logger = Logger.getLogger("Teams");
+        try {
+            FileHandler fh = new FileHandler("Teams.log");
+            logger.addHandler(fh);
+        } catch (IOException e) {
+            System.err.println("Can't create log file");
+        }
+    }
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List <Team> teams = new ArrayList<>();
 

@@ -1,16 +1,19 @@
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Main {
+    private static Logger logger;
 
     public static void main(String[] args) {
+        logger = Logger.getLogger("Teams");
         Scanner scanner = new Scanner(System.in);
         List <Team> teams = new ArrayList<>();
 
         // in menu AddTeams
         System.out.println("*Add new teams*");
         System.out.print("Input count of teams: ");
-        int countOfteams = inputCountOfTeams(scanner);
+        int countOfteams = inputMoreThanOne(scanner);
         for (int i = 0; i < countOfteams; i++) {
             scanner.nextLine(); // очистка буфера
             System.out.print("Team [" + i + "] type [football/basketball]: ");
@@ -36,23 +39,27 @@ public class Main {
             System.out.print("Input team id: ");
             countOfteams = inputInt(scanner);
             if (countOfteams < teams.size() && countOfteams>=0) break;
+            logger.severe("[inputted id>=" + teams.size() + "]: " + countOfteams);
         }
         System.out.print("How many players you want to add?: ");
-        int countofplayersadd = inputCountOfTeams(scanner);
+        int countofplayersadd = inputMoreThanOne(scanner);
         for (int i = 0; i < countofplayersadd; i++) {
             scanner.nextLine();
             System.out.print("[" + teams.get(countOfteams).getName() + "] new player [" + i + "] name: ");
             String tepmplayername = scanner.nextLine();
             System.out.print("[" + teams.get(countOfteams).getName() + "] new player [" + i + "] number: ");
-            int tempplayernumber = inputInt(scanner);
+            int tempplayernumber = inputMoreThanOne(scanner);
             System.out.print("[" + teams.get(countOfteams).getName() + "] new player [" + i + "] salary: ");
-            int tempplayersalary = inputInt(scanner);
+            int tempplayersalary = inputMoreThanOne(scanner);
             teams.get(countOfteams).addPlayers(new Player<>(tepmplayername, tempplayernumber, BigDecimal.valueOf(tempplayersalary)));
         }
 
         // in menu ShowTeams
         System.out.println("\n*Your teams*");
-        teams.get(0).getInfo();
+        for (Team t:
+             teams) {
+            t.getInfo();
+        }
 
         System.out.println("\n*Before*");
         teams.get(1).getInfo();
@@ -96,18 +103,20 @@ public class Main {
     }
 
     private static int checkRate(Scanner scanner) {
+        int temprate = 0;
         while (true)
         try {
-            int temprate = inputInt(scanner);
-            if (temprate < 0 || temprate > 100) throw new IllegalArgumentException();
+             temprate = inputInt(scanner);
+            if (temprate <= 0 || temprate > 100) throw new IllegalArgumentException();
             return temprate;
         }catch (IllegalArgumentException e) {
-            System.err.print("[ERROR: Rate must be 0-100!] - ");
+            logger.severe("[inputted rate <1 or >100]: " + temprate);
+            logger.info("[ERROR] - Input correct number:");
         }
     }
 
     private static String inputTypeOfTeam(Scanner scanner) {
-        String temptype;
+        String temptype = null;
         while (true)
         try {
             temptype = scanner.nextLine();
@@ -115,18 +124,23 @@ public class Main {
             return temptype;
         }
         catch (Exception e) {
-            System.err.print("Type must be 'football/basketball': ");
+            logger.severe("[incorrect type]: " + temptype);
+            logger.info("[ERROR] - Input correct type:");
         }
     }
 
-    private static int inputCountOfTeams(Scanner scanner) {
+    private static int inputMoreThanOne(Scanner scanner) {
+        int countOfteams = 0;
         while (true)
         try {
-            int countOfteams = inputInt(scanner);
-            if (countOfteams < 1) throw new IllegalArgumentException("Input number >=1");
+            countOfteams = inputInt(scanner);
+            if (countOfteams < 1) {
+                throw new IllegalArgumentException("inputted number is <1");
+            }
             return countOfteams;
-        } catch (IllegalArgumentException e) {
-            System.err.print("[ERROR: this number <1!] - Input new number: ");
+        } catch (Exception e) {
+            logger.severe(e.getMessage() + "]: " + countOfteams);
+            logger.info("[ERROR] - Input correct number: ");
         }
     }
 
@@ -135,7 +149,8 @@ public class Main {
             try {
                 return scanner.nextInt();
             } catch (Exception e) {
-                System.err.print("[ERROR: not int!] - Input number: "); // сюда не пишем логику
+                logger.severe("[not int]"); // сюда не пишем логику
+                logger.info("[ERROR] - Input correct number: ");
                 scanner.nextLine(); // очистка буфера
             }
         }

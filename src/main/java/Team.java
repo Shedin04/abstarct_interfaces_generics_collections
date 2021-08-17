@@ -143,11 +143,14 @@ public abstract class Team <T>{
                 ", rate=" + rate +'}';
     }
 
-    public void getInfo(){
-        if (players.size() == 0 && staff.size() == 0 ) System.out.println ("[ERROR]: " + getName() + " don't have a squad\n");
-        System.out.println(getType() + "[" + curId + "] - " + getName() + ": ");
-        for (int i = 0; i < players.size(); i++) System.out.println(players.get(i));
-        for (int i = 0; i < staff.size(); i++) System.out.println(staff.get(i));
+    public void getInfo() {
+        if (players.size() == 0 && staff.size() == 0)
+            System.out.println("[!]: " + getName() + " don't have a squad");
+        else {
+            System.out.println(getType() + "[" + curId + "] - " + getName() + ": ");
+            for (int i = 0; i < players.size(); i++) System.out.println(players.get(i));
+            for (int i = 0; i < staff.size(); i++) System.out.println(staff.get(i));
+        }
     }
 
     public void addRate(Integer add) {

@@ -2,18 +2,22 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Main {
     private static Logger logger;
 
     static {
         logger = Logger.getLogger("Teams");
+        logger.setLevel(Level.SEVERE); // фильтр
         try {
-            FileHandler fh = new FileHandler("Teams.log");
+            FileHandler fh = new FileHandler("Teams.log",true);
+            fh.setFormatter(new SimpleFormatter()); //чтобы записывалось как на консоли
             logger.addHandler(fh);
         } catch (IOException e) {
-            System.err.println("Can't create log file");
+            System.err.println("Can't create log file" + Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -138,7 +142,7 @@ public class Main {
             logger.severe("[incorrect type]: " + temptype);
             logger.info("[ERROR] - Input correct type:");
         }
-    }
+   }
 
     private static int inputMoreThanOne(Scanner scanner) {
         int countOfteams = 0;
@@ -146,7 +150,7 @@ public class Main {
         try {
             countOfteams = inputInt(scanner);
             if (countOfteams < 1) {
-                throw new IllegalArgumentException("inputted number is <1");
+                throw new IllegalArgumentException("inputted number is less than 1");
             }
             return countOfteams;
         } catch (Exception e) {

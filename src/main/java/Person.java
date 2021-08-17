@@ -10,7 +10,7 @@ abstract public class Person<T> implements Iterable<Items>{
     private List<Items> items = new ArrayList<Items>();
 
     static {
-        id = 00;
+        id = -1;
         index = 0;
     }
 

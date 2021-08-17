@@ -20,7 +20,6 @@ public abstract class Team <T>{
     }
 
     public Team(String name, int rate) {
-        checkRate(rate);
         this.rate = rate;
         curId=++id;
         this.name = name;
@@ -32,14 +31,9 @@ public abstract class Team <T>{
         while (index<newstaff.length){
             this.staff.add(newstaff[index++]);
         }
-        checkRate(rate);
         this.rate = rate;
         curId=++id;
         this.name = name;
-    }
-
-    private void checkRate(int rate) {
-        if (rate<=0 || rate >100) throw new IllegalArgumentException("Введите значение от 0 до 100");
     }
 
 
@@ -49,7 +43,6 @@ public abstract class Team <T>{
         while (index<newplayer.length){
             this.players.add(newplayer[index++]);
         }
-        checkRate(rate);
         this.rate = rate;
         curId=++id;
         this.name = name;
@@ -121,7 +114,7 @@ public abstract class Team <T>{
         if (error == (players.size() + staff.size())) System.out.println("[ERROR]: Person not found");
     }
 
-    private String getName() {
+    protected String getName() {
         return name;
     }
 
@@ -155,12 +148,16 @@ public abstract class Team <T>{
         System.out.println(getType() + "[" + curId + "] - " + getName() + ": ");
         for (int i = 0; i < players.size(); i++) System.out.println(players.get(i));
         for (int i = 0; i < staff.size(); i++) System.out.println(staff.get(i));
-        System.out.println();
     }
 
     public void addRate(Integer add) {
-        if (add+getRate() > 100 || add < 0) throw new IllegalArgumentException("Рейтинг должен быть <=100");
-        setRate(getRate()+add);
+        try {
+            if (add+getRate() > 100 || add < 0) throw new IllegalArgumentException("Рейтинг должен быть <=100");
+            setRate(getRate()+add);
+        }
+        catch (IllegalArgumentException e){
+            System.err.println("[ERROR: Rate > 100] - input new: ");
+        }
     }
 
     public void addSallary(Object data, BigDecimal add){

@@ -2,16 +2,57 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        List <Team> teams = new ArrayList<>();
+
+        // in menu AddTeams
+        System.out.println("*Add new teams*");
         System.out.print("Input count of teams: ");
         int countOfteams = inputCountOfTeams(scanner);
-        scanner.close();
+        for (int i = 0; i < countOfteams; i++) {
+            scanner.nextLine(); // очистка буфера
+            System.out.print("Team [" + i + "] type [football/basketball]: ");
+            String temptype = inputTypeOfTeam(scanner);
+            System.out.print("Team [" + i + "] name: ");
+            String tempname = scanner.nextLine();
+            System.out.print("Team [" + i + "] rate: ");
+            int temprate = checkRate(scanner);
+            if (temptype.charAt(0) == 'f') teams.add(new Football_team(tempname,temprate));
+            else teams.add(new Basketball_team(tempname,temprate));
+        }
 
-        List <Team> teams = new ArrayList<>();
-        teams.add(new Football_team("Vorskla",50, new Player<>("Shedin", 10, BigDecimal.valueOf(45000)),new Player<>("Rest",4,BigDecimal.valueOf(35000))));
-        teams.add(new Football_team("Shakhtar",75, new Staff("Thomson","manager",BigDecimal.valueOf(18000)), new Staff("Peterson","cook",BigDecimal.valueOf(12000))));
-        teams.add(new Basketball_team("Miami Heat", 69));
+        // in menu ShowTeams
+        System.out.println("\n*Your teams*");
+        for (Team t:
+             teams) {
+            System.out.println(t);
+        }
+
+        // in menu AddPlayers
+        System.out.println("\n*Add players*");
+        while (true) {
+            System.out.print("Input team id: ");
+            countOfteams = inputInt(scanner);
+            if (countOfteams < teams.size() && countOfteams>=0) break;
+        }
+        System.out.print("How many players you want to add?: ");
+        int countofplayersadd = inputCountOfTeams(scanner);
+        for (int i = 0; i < countofplayersadd; i++) {
+            scanner.nextLine();
+            System.out.print("[" + teams.get(countOfteams).getName() + "] new player [" + i + "] name: ");
+            String tepmplayername = scanner.nextLine();
+            System.out.print("[" + teams.get(countOfteams).getName() + "] new player [" + i + "] number: ");
+            int tempplayernumber = inputInt(scanner);
+            System.out.print("[" + teams.get(countOfteams).getName() + "] new player [" + i + "] salary: ");
+            int tempplayersalary = inputInt(scanner);
+            teams.get(countOfteams).addPlayers(new Player<>(tepmplayername, tempplayernumber, BigDecimal.valueOf(tempplayersalary)));
+        }
+
+        // in menu ShowTeams
+        System.out.println("\n*Your teams*");
+        teams.get(0).getInfo();
 
         System.out.println("\n*Before*");
         teams.get(1).getInfo();
@@ -54,6 +95,30 @@ public class Main {
         System.out.println(teams);
     }
 
+    private static int checkRate(Scanner scanner) {
+        while (true)
+        try {
+            int temprate = inputInt(scanner);
+            if (temprate < 0 || temprate > 100) throw new IllegalArgumentException();
+            return temprate;
+        }catch (IllegalArgumentException e) {
+            System.err.print("[ERROR: Rate must be 0-100!] - ");
+        }
+    }
+
+    private static String inputTypeOfTeam(Scanner scanner) {
+        String temptype;
+        while (true)
+        try {
+            temptype = scanner.nextLine();
+            if (!temptype.equals("football") && !temptype.equals("foot") && !temptype.equals("f") && !temptype.equals("basketball") && !temptype.equals("basket") && !temptype.equals("b")) throw new Exception("Error"); // false&&true = false
+            return temptype;
+        }
+        catch (Exception e) {
+            System.err.print("Type must be 'football/basketball': ");
+        }
+    }
+
     private static int inputCountOfTeams(Scanner scanner) {
         while (true)
         try {
@@ -66,7 +131,7 @@ public class Main {
     }
 
     private static int inputInt(Scanner scanner) {
-        while (true) {
+        while (true)
             try {
                 return scanner.nextInt();
             } catch (Exception e) {
@@ -75,4 +140,3 @@ public class Main {
             }
         }
     }
-}

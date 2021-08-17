@@ -3,12 +3,17 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Input count of teams: ");
+        int countOfteams = inputCountOfTeams(scanner);
+        scanner.close();
+
         List <Team> teams = new ArrayList<>();
         teams.add(new Football_team("Vorskla",50, new Player<>("Shedin", 10, BigDecimal.valueOf(45000)),new Player<>("Rest",4,BigDecimal.valueOf(35000))));
         teams.add(new Football_team("Shakhtar",75, new Staff("Thomson","manager",BigDecimal.valueOf(18000)), new Staff("Peterson","cook",BigDecimal.valueOf(12000))));
         teams.add(new Basketball_team("Miami Heat", 69));
 
-        System.out.println("*Before*");
+        System.out.println("\n*Before*");
         teams.get(1).getInfo();
         System.out.println("*Add new players*");
         teams.get(1).addPlayers(new Player<>("Marlos",12,BigDecimal.valueOf(300000)),new Player<>("Dodo", 3,BigDecimal.valueOf(250000)));
@@ -47,5 +52,28 @@ public class Main {
         System.out.println("\n*SortTeamsByRate*");
         teams.get(0).sortTeambyRate(teams);
         System.out.println(teams);
+    }
+
+    private static int inputCountOfTeams(Scanner scanner) {
+        while (true)
+        try {
+            int countOfteams = inputInt(scanner);
+            if (countOfteams < 1) throw new IllegalArgumentException("Input number >=1");
+            return countOfteams;
+        } catch (IllegalArgumentException e) {
+            System.err.print("[ERROR: this number <1!] - Input new number: ");
+        }
+    }
+
+    private static int inputInt(Scanner scanner) {
+        while (true) {
+            try {
+                int count = scanner.nextInt();
+                return count;
+            } catch (Exception e) {
+                System.err.print("[ERROR: not int!] - Input number: "); // сюда не пишем логику
+                scanner.nextLine(); // очистка буфера
+            }
+        }
     }
 }

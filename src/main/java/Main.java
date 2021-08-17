@@ -68,8 +68,7 @@ public class Main {
     private static int inputInt(Scanner scanner) {
         while (true) {
             try {
-                int count = scanner.nextInt();
-                return count;
+                return scanner.nextInt();
             } catch (Exception e) {
                 System.err.print("[ERROR: not int!] - Input number: "); // сюда не пишем логику
                 scanner.nextLine(); // очистка буфера

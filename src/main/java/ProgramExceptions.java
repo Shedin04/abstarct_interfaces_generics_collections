@@ -39,11 +39,10 @@ public class ProgramExceptions extends Exception{
             }
     }
 
-    public static int checkAddRate(Integer rate, Integer add) {
+    public static void checkAddRate(Integer rate, Integer add) {
         while (true)
             try {
             if (add +rate > 100 || add < 0) throw new ProgramExceptions("[rate must be <=100]");
-            return add;
         }
         catch (ProgramExceptions e){
             logger.severe(e.getMessage() + ": '" + add + "' - " + Arrays.toString(e.getStackTrace()));

@@ -52,11 +52,6 @@ public abstract class Team <T>{
         index = 0;
         Arrays.asList(newplayers).toArray(new Player[newplayers.length]);
         while (index<newplayers.length){
-            for (int i = 0; i < players.size(); i++) {
-                if (newplayers[index].getNumber() == players.get(i).getNumber()) {
-                    throw new IllegalArgumentException("Номер занят");
-                }
-            }
                 this.players.add(newplayers[index++]);
         }
     }
@@ -80,6 +75,10 @@ public abstract class Team <T>{
         }
         checkPerson(error);
     }
+
+    protected List<Player> getPlayers(){
+        return players;
+    };
 
     public BigDecimal totalToPay(Type type){
         totalsalary = BigDecimal.ZERO;
@@ -157,6 +156,8 @@ public abstract class Team <T>{
         ProgramExceptions.checkAddRate(rate, add);
         setRate(getRate()+add);
     }
+
+    /**ПЕРЕНЕСТИ ПРОВЕРКУ**/
 
     public void addSallary(Object data, BigDecimal add){
         int notfound = 0;

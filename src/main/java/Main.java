@@ -13,7 +13,7 @@ public class Main {
         /*
               * Will be from file
          */
-        /*System.out.print("Input count of teams: ");
+        System.out.print("Input count of teams: ");
         int countOfteams = ProgramExceptions.inputMoreThanOne(scanner);
         for (int i = 0; i < countOfteams; i++) {
             scanner.nextLine(); // очистка буфера
@@ -25,7 +25,7 @@ public class Main {
             int temprate = ProgramExceptions.checkRate(scanner);
             if (temptype.charAt(0) == 'f') teams.add(new Football_team(tempname, temprate));
             else teams.add(new Basketball_team(tempname, temprate));
-        }*/
+        }
 
         // in menu ShowTeams
         System.out.println("\n*Your teams*");
@@ -45,7 +45,7 @@ public class Main {
             System.out.print("[" + teams.get(teamId).getName() + "] new player [" + i + "] name: ");
             String tepmplayername = scanner.nextLine();
             System.out.print("[" + teams.get(teamId).getName() + "] new player [" + i + "] number: ");
-            int tempplayernumber = ProgramExceptions.inputMoreThanOne(scanner);
+            int tempplayernumber = ProgramExceptions.checkNumber(scanner, teams.get(teamId));
             System.out.print("[" + teams.get(teamId).getName() + "] new player [" + i + "] salary: ");
             int tempplayersalary = ProgramExceptions.inputMoreThanOne(scanner);
             teams.get(teamId).addPlayers(new Player<>(tepmplayername, tempplayernumber, BigDecimal.valueOf(tempplayersalary)));

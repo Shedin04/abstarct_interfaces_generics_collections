@@ -50,6 +50,22 @@ public class ProgramExceptions extends Exception{
         }
     }
 
+    public static int checkNumber(Scanner scanner, Team team) {
+        int tempplayernumber = 0;
+        while (true)
+            try {
+                tempplayernumber = ProgramExceptions.inputMoreThanOne(scanner);
+                List<Player> players = team.getPlayers();
+                for (Player tempplayer : players) {
+                    if (String.valueOf(tempplayer.getNumber()).equals(String.valueOf(tempplayernumber)))
+                        throw new ProgramExceptions("[this number is used!]");
+                }
+                return tempplayernumber;
+            } catch (ProgramExceptions e) {
+                logger.severe(e.getMessage() + ": '" + String.valueOf(tempplayernumber) + "' - " + Arrays.toString(e.getStackTrace()));
+                System.err.print("[ERROR] - Input unused number: ");
+            }
+    }
 
     public static String inputTypeOfTeam(Scanner scanner) {
         String temptype = null;

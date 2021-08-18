@@ -111,7 +111,7 @@ public abstract class Team <T>{
     }
 
     private void checkPerson(int error) {
-        if (error == (players.size() + staff.size())) System.out.println("[ERROR]: Person not found");
+        if (error == (players.size() + staff.size())) System.err.println("[ERROR]: Person not found");
     }
 
     protected String getName() {
@@ -154,13 +154,8 @@ public abstract class Team <T>{
     }
 
     public void addRate(Integer add) {
-        try {
-            if (add+getRate() > 100 || add < 0) throw new IllegalArgumentException("Рейтинг должен быть <=100");
-            setRate(getRate()+add);
-        }
-        catch (IllegalArgumentException e){
-            System.err.println("[ERROR: Rate > 100] - input new: ");
-        }
+        ProgramExceptions.checkAddRate(rate, add);
+        setRate(getRate()+add);
     }
 
     public void addSallary(Object data, BigDecimal add){
@@ -180,7 +175,7 @@ public abstract class Team <T>{
             }
             else notfound++;
         }
-        if (notfound == players.size()+staff.size()) System.out.println("ERROR: Person - not found\n");
+        if (notfound == players.size()+staff.size()) System.err.println("ERROR: Person - not found\n");
     }
 
     public void showPersonItems(String personname){

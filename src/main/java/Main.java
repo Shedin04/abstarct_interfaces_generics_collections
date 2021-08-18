@@ -122,10 +122,10 @@ public class Main {
         while (true)
         try {
              temprate = inputInt(scanner);
-            if (temprate <= 0 || temprate > 100) throw new IllegalArgumentException();
+            if (temprate <= 0 || temprate > 100) throw new ProgramExceptions("[inputted rate <1 or >100]");
             return temprate;
-        }catch (IllegalArgumentException e) {
-            logger.severe("[inputted rate <1 or >100]: " + temprate);
+        }catch (ProgramExceptions e) {
+            logger.severe(e.getMessage() + ": " + temprate);
             logger.info("[ERROR] - Input correct number:");
         }
     }
@@ -135,11 +135,12 @@ public class Main {
         while (true)
         try {
             temptype = scanner.nextLine();
-            if (!temptype.equals("football") && !temptype.equals("foot") && !temptype.equals("f") && !temptype.equals("basketball") && !temptype.equals("basket") && !temptype.equals("b")) throw new Exception("Error"); // false&&true = false
+            if (!temptype.equals("football") && !temptype.equals("foot") && !temptype.equals("f") && !temptype.equals("basketball") &&
+                    !temptype.equals("basket") && !temptype.equals("b")) throw new ProgramExceptions("[incorrect type]"); // false&&true = false
             return temptype;
         }
-        catch (Exception e) {
-            logger.severe("[incorrect type]: " + temptype);
+        catch (ProgramExceptions e) {
+            logger.severe(e.getMessage() + ": " + temptype);
             logger.info("[ERROR] - Input correct type:");
         }
    }
@@ -150,12 +151,12 @@ public class Main {
         try {
             countOfteams = inputInt(scanner);
             if (countOfteams < 1) {
-                throw new IllegalArgumentException("inputted number is less than 1");
+                throw new ProgramExceptions("[inputted number is less than 1]");
             }
             return countOfteams;
         } catch (Exception e) {
-            logger.severe(e.getMessage() + "]: " + countOfteams);
-            logger.info("[ERROR] - Input correct number: ");
+            logger.severe(e.getMessage() + ": " + countOfteams);
+            System.err.print("[ERROR] - Input correct number: ");
         }
     }
 

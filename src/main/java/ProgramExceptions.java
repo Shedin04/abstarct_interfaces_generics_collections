@@ -55,6 +55,7 @@ public class ProgramExceptions extends Exception{
         while (true)
             try {
                 tempplayernumber = ProgramExceptions.inputMoreThanOne(scanner);
+                if (tempplayernumber > 99) throw new ProgramExceptions("[this number is more than 99]");
                 List<Player> players = team.getPlayers();
                 for (Player tempplayer : players) {
                     if (String.valueOf(tempplayer.getNumber()).equals(String.valueOf(tempplayernumber)))
@@ -63,7 +64,7 @@ public class ProgramExceptions extends Exception{
                 return tempplayernumber;
             } catch (ProgramExceptions e) {
                 logger.severe(e.getMessage() + ": '" + String.valueOf(tempplayernumber) + "' - " + Arrays.toString(e.getStackTrace()));
-                System.err.print("[ERROR] - Input unused number: ");
+                System.err.print("[ERROR] - Input another number: ");
             }
     }
 
@@ -116,7 +117,7 @@ public class ProgramExceptions extends Exception{
                 if (teamId < teams.size() && teamId >= 0) return teamId;
                 else throw new ProgramExceptions("[incorrect id of team]");
             } catch (ProgramExceptions e) {
-                logger.severe("[inputted id>=" + teams.size() + "]: '" + teamId + "' - " + Arrays.toString(e.getStackTrace()));
+                logger.severe("[inputted id>" + (teams.size()-1) + "]: '" + teamId + "' - " + Arrays.toString(e.getStackTrace()));
             }
     }
 }
